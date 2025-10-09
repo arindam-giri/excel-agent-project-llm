@@ -1,0 +1,28 @@
+# Ignore all .DS_Store files (macOS specific)
+.DS_Store
+
+# Ignore build artifacts and temporary files
+/build/
+/dist/
+/target/
+*.log
+*.tmp
+*.bak
+
+# Ignore node_modules directory (common for JavaScript projects)
+node_modules/
+
+# Ignore Python virtual environments
+venv/
+.venv/
+.venv312/
+# Ignore IDE-specific files (e.g., VS Code, IntelliJ)
+.vscode/
+.idea/
+*.iml
+
+# Ignore sensitive information (e.g., API keys, database credentials)
+.env
+
+
+__pycache__/

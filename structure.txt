@@ -1,0 +1,102 @@
+excel-agent-project/
+│
+├── README.md
+├── requirements.txt
+├── .env.example
+├── .gitignore
+├── setup.sh                      # Setup script (install ripgrep, create directories)
+│
+├── config/
+│   ├── __init__.py
+│   ├── settings.py              # Configuration (AWS, Claude, paths, cache settings)
+│   └── prompts.py               # System prompts and templates
+│
+├── src/
+│   ├── __init__.py
+│   │
+│   ├── preprocessing/
+│   │   ├── __init__.py
+│   │   ├── excel_loader.py      # Load Excel files with openpyxl (read_only mode)
+│   │   ├── sheet_analyzer.py    # Classify sheets, detect structures
+│   │   ├── csv_converter.py     # Convert Excel → searchable CSV with coordinates
+│   │   └── data_sampler.py      # Smart sampling strategies for large datasets
+│   │
+│   ├── search/
+│   │   ├── __init__.py
+│   │   ├── search_orchestrator.py   # Main search coordinator (3-tier strategy)
+│   │   ├── index_builder.py         # Build inverted indexes from Excel metadata
+│   │   ├── index_searcher.py        # Search inverted indexes (instant)
+│   │   ├── ripgrep_searcher.py      # Ripgrep-based content search (fast)
+│   │   ├── tokenizer.py             # Excel-aware tokenization
+│   │   └── query_classifier.py      # Classify query type for optimal search
+│   │
+│   ├── agents/
+│   │   ├── __init__.py
+│   │   ├── orchestrator.py      # Main LangGraph orchestrator
+│   │   ├── state.py             # State definitions (simplified)
+│   │   ├── planner_node.py      # Planning node
+│   │   ├── executor_node.py     # Tool execution node
+│   │   └── synthesizer_node.py  # Result synthesis node
+│   │
+│   ├── tools/
+│   │   ├── __init__.py
+│   │   ├── base_tool.py         # Base tool class
+│   │   ├── structure_tool.py    # Get Excel structure/metadata
+│   │   ├── search_tool.py       # Search tool (uses SearchOrchestrator)
+│   │   ├── extract_tool.py      # Extract specific data ranges
+│   │   ├── compare_tool.py      # Compare files/sheets
+│   │   ├── analyze_tool.py      # Statistical analysis
+│   │   └── pivot_tool.py        # Pivot table operations
+│   │
+│   ├── cache/
+│   │   ├── __init__.py
+│   │   ├── cache_manager.py     # Unified cache management
+│   │   └── cache_strategies.py  # Different caching strategies
+│   │
+│   ├── llm/
+│   │   ├── __init__.py
+│   │   ├── bedrock_client.py    # AWS Bedrock client with prompt caching
+│   │   └── prompt_builder.py    # Build context-aware prompts
+│   │
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   ├── excel_utils.py       # Excel helper functions
+│   │   ├── coordinate_mapper.py # Map between A1, R1C1, and array indices
+│   │   ├── logger.py            # Logging setup
+│   │   └── validators.py        # Input validation
+│   │
+│   └── api/
+│       ├── __init__.py
+│       ├── main.py              # FastAPI application
+│       ├── routes.py            # API endpoints
+│       ├── schemas.py           # Pydantic models
+│       └── middleware.py        # File upload handling, error handling
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_search/
+│   │   ├── test_index_searcher.py
+│   │   ├── test_ripgrep_searcher.py
+│   │   └── test_tokenizer.py
+│   ├── test_tools/
+│   │   └── test_all_tools.py
+│   ├── test_agents/
+│   │   └── test_orchestrator.py
+│   └── fixtures/
+│       ├── sample_excel_files/
+│       └── sample_queries.json
+│
+├── data/
+│   ├── uploads/                 # Temporary uploaded Excel files
+│   ├── searchable/              # Converted CSV files for ripgrep
+│   ├── cache/                   # Cache storage (indexes, metadata)
+│   └── logs/                    # Application logs
+│
+├── notebooks/
+│   ├── 01_search_benchmarks.ipynb
+│   └── 02_query_testing.ipynb
+│
+└── scripts/
+    ├── run_cli.py               # CLI interface for testing
+    ├── benchmark_search.py      # Performance testing
+    └── cleanup_cache.py         # Cache maintenance
